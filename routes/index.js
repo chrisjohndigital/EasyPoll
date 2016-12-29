@@ -5,8 +5,7 @@ var url = require('url');
 
 var sanitizeHtml = require('sanitize-html');
 
-var MongoClient = require('mongodb').MongoClient;
-var ObjectId = require('mongodb').ObjectID;
+var mongoclient = require('mongodb').MongoClient;
 var assert = require('assert');
 
 var id = '';
@@ -65,7 +64,7 @@ router.get('/', function(req, res, next) {
     results='';
     referrer = (sanitizeHtml(getFormattedUrl(req))).replace(/[^A-Za-z0-9]/g, '');
     console.log ('Instance referrer: ' + referrer);
-    MongoClient.connect(mongodbaddress, function(err, db) {
+    mongoclient.connect(mongodbaddress, function(err, db) {
         //assert.equal(null, err);
         findReferrer(db, {'referrer': referrer}, function() {
             if (id!='') {
