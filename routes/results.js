@@ -8,26 +8,6 @@ var assert = require('assert');
 var ratings = 0;
 var total = 0;
 
-
-router.post('/', function(req, res, next) {
-    var mongodbaddress = req.app.get('mongodbaddress');
-    MongoClient.connect(mongodbaddress, function(err, db) {
-        //assert.equal(null, err);
-        findRecord(db, {'_id': ObjectId(req.query.id)}, function() {
-            if (isNaN(total)==false && isNaN(ratings)==false) {
-                ratings = (ratings + (Number(req.body.rating)));
-                ++total;
-                updateRecord(db, {'_id': ObjectId(req.query.id)}, function() {
-                    db.close();
-                    res.redirect (req.headers.referer);
-                });  
-            } else {
-                res.redirect (req.headers.referer);
-            }
-        });
-    });      
-});
-
 var findRecord = function(db, query, callback) {
    var cursor = db.collection('referrer').find( query );
    cursor.each(function(err, doc) {
@@ -52,5 +32,24 @@ var updateRecord = function(db, query, callback) {
           callback();
    });
 };
+
+router.post('/', function(req, res, next) {
+    var mongodbaddress = req.app.get('mongodbaddress');
+    MongoClient.connect(mongodbaddress, function(err, db) {
+        //assert.equal(null, err);
+        findRecord(db, {'_id': ObjectId(req.query.id)}, function() {
+            if (isNaN(total)==false && isNaN(ratings)==false) {
+                ratings = (ratings + (Number(req.body.rating)));
+                ++total;
+                updateRecord(db, {'_id': ObjectId(req.query.id)}, function() {
+                    db.close();
+                    res.redirect (req.headers.referer);
+                });  
+            } else {
+                res.redirect (req.headers.referer);
+            }
+        });
+    });      
+});
 
 module.exports = router;
