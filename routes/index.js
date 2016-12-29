@@ -81,7 +81,7 @@ var insertRecord = function(db, req, callback) {
     }); 
 };
 
-function getFormattedUrl(req) {
+var getFormattedUrl = function(req) {
     return url.format({
         protocol: req.protocol,
         host: req.get('host'),
