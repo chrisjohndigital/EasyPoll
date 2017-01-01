@@ -1,7 +1,6 @@
-var MongoClient = require('mongodb').MongoClient;
+var mongoclient = require('mongodb').MongoClient;
 var assert = require('assert');
 
-var db;
 
 describe('EasyPoll asynchronous tests', function(){
     console.log('Scheduling EasyPoll tests');
@@ -10,7 +9,7 @@ describe('EasyPoll asynchronous tests', function(){
     // Setup
         console.log('Establishing MongoDB connection');
         var mongodbaddress = 'mongodb://localhost:27017/easypoll_development';
-        MongoClient.connect(mongodbaddress, function(err, db) {
+        mongoclient.connect(mongodbaddress, function(err, db) {
             connection = db;
             assert.equal(null, err);
             console.log ('Successfully Connected - Proceed to tests');
