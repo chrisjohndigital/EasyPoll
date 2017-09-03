@@ -5,23 +5,22 @@ var mongoclient = require('mongodb').MongoClient;
 var objectid = require('mongodb').ObjectID;
 var assert = require('assert');
 
-var ratings = 0;
-var total = 0;
-
 var findRecord = function(db, query, callback) {
    var cursor = db.collection('referrer').find( query );
+   var ratings = 0;
+   var total = 0;
    cursor.each(function(err, doc) {
       //assert.equal(err, null);
       if (doc != null) {
           ratings = (Number(doc.ratings));
           total = (Number(doc.total));
         } else {
-          callback();
+          callback(ratings, total);
       }
    });
 };
 
-var updateRecord = function(db, query, callback) {
+var updateRecord = function(db, query, ratings, total, callback) {
     console.log ('Updating record');
     db.collection('referrer').updateOne(
       query,
@@ -37,11 +36,11 @@ router.post('/', function(req, res, next) {
     var mongodbaddress = req.app.get('mongodbaddress');
     mongoclient.connect(mongodbaddress, function(err, db) {
         //assert.equal(null, err);
-        findRecord(db, {'_id': objectid(req.query.id)}, function() {
+        findRecord(db, {'_id': objectid(req.query.id)}, function(ratings, total) {
             if (isNaN(total)==false && isNaN(ratings)==false) {
                 ratings = (ratings + (Number(req.body.rating)));
                 ++total;
-                updateRecord(db, {'_id': objectid(req.query.id)}, function() {
+                updateRecord(db, {'_id': objectid(req.query.id)}, ratings, total, function() {
                     db.close();
                     res.redirect (req.headers.referer);
                 });  

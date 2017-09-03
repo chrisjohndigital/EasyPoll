@@ -3,6 +3,8 @@ EasyPoll - MongoDB
 
 Lightweight Node.js and MongoDB polling tool
 
+![Image representing OpenLang](public/images/easypoll.png?raw=true "Image representing EasyPoll")
+
 ##About
 
 EasyPoll uses the window location as a unique referrer and can be dropped onto any webpage as a simple polling tool or can be adapted to create more dymamic polling experiences.  If you are interested in Node.js and MongoDB application solutions then EasyPoll will get you started.
