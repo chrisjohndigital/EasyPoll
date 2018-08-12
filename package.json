@@ -7,15 +7,15 @@
     "test": "mocha"
   },
   "dependencies": {
-    "body-parser": "~1.15.2",
+    "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
-    "debug": "~2.2.0",
+    "debug": "~>2.6.9",
     "ejs": "~2.5.2",
-    "express": "~4.14.0",
+    "express": "^4.16.3",
     "mongodb": "^2.2.11",
-    "morgan": "~1.7.0",
+    "morgan": "^1.9.0",
     "sanitize-html": "^1.13.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "^2.5.0"
   },
   "devDependencies": {
     "mocha": "^3.2.0"
